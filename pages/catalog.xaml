@@ -1,0 +1,114 @@
+﻿<Page x:Class="TeaShop.pages.catalog"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TeaShop.pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Список товаров">
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <WrapPanel Grid.Row="0" HorizontalAlignment="Stretch">
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <TextBlock Text="Введите текст для поиска  " FontSize="20" VerticalAlignment="Center"/>
+                <TextBox Width="150" x:Name="TBoxSearch" TextChanged="TBoxSearch_TextChanged"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <TextBlock Text="Категория:  " FontSize="20"/>
+                <ComboBox Width="150" x:Name="RoomTypeCmb" SelectionChanged="RoomTypeCmb_SelectionChanged" DisplayMemberPath="category"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <TextBlock Text="Сортировать по:  " Margin="5,0" FontSize="20"/>
+                <ComboBox Width="150" x:Name="ComboSort"
+                        SelectionChanged="ComboSort_SelectionChanged" >
+                    <ComboBoxItem Content="возрастанию"/>
+                    <ComboBoxItem Content="убыванию"/>
+                </ComboBox>
+            </StackPanel>
+        </WrapPanel>
+
+        <DataGrid x:Name="RoomDg" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" FontSize="18" ScrollViewer.CanContentScroll="False">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Фото" Width="250">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding GetPhoto}" Stretch="Uniform"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Наименование" Width="150">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding name}" TextWrapping="Wrap"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Описание" Width="500">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding description}" TextWrapping="Wrap"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Binding="{Binding price,StringFormat='{}{0} руб.'}" Width="130" Header="Цена"/>
+                <DataGridTextColumn Binding="{Binding count,StringFormat='{}{0}'}" Width="130" Header="В наличии"/>
+                <DataGridTemplateColumn  Width="150" Header="Категория">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding type.category}" TextWrapping="Wrap"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="200">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="InfoBtn" Content="Редактировать" Click="InfoBtn_Click"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Grid Grid.Row="2" HorizontalAlignment="Right" Margin="0 0 20 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="1.2*"/>
+            </Grid.ColumnDefinitions>
+            <ListBox x:Name="PagesItemsControl" Grid.Column="1" VerticalAlignment="Center">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Button x:Name="SelectPageBtn" Content="{Binding PageNumber}" Background="Transparent" BorderThickness="0" FontSize="24" Padding="20 5" Click="SelectPageBtn_Click"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Button x:Name="prevBtn" Grid.Column="0" Content="&lt;" Background="#FFD1B877" Foreground="#FF5D8E4D"  FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="20 5" Click="prevBtn_Click" Height="30" FontSize="14"/>
+            <Button x:Name="nextBtn" Grid.Column="2" Content=">" Background="#FFD1B877" Foreground="#FF5D8E4D" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="20 5" Click="nextBtn_Click" Height="30" FontSize="14"/>
+
+        </Grid>
+        <StackPanel Orientation="Horizontal" Grid.Row="2">
+        <Button Click="AddRoomBtn_Click" x:Name="AddRoomBtn" Content="Добавить" 
+                Grid.Row="2" HorizontalAlignment="Left" Background="#FFD1B877" Foreground="#FF5D8E4D" BorderThickness="0" Width="150" Height="30" FontWeight="Bold" FontSize="14"
+                VerticalAlignment="Center" Padding="20 5" />
+        <Button Click="DelBtn_Click" x:Name="DelBtn" Content="Удалить" 
+                Grid.Row="2" HorizontalAlignment="Left" Background="#FFD1B877" Foreground="#FF5D8E4D" BorderThickness="0" Width="150" Height="30" FontWeight="Bold" FontSize="14"
+                VerticalAlignment="Center" Padding="20 5" Margin="5"/>
+            <Button Content="Назад" x:Name="Back" Click="Back_Click" HorizontalAlignment="Left" VerticalAlignment="Center" Width="150" Height="30" FontWeight="Bold" FontSize="14"
+                 Padding="20 5" Grid.Row="2" Background="#FFD1B877" Foreground="#FF5D8E4D" BorderThickness="0" />
+        </StackPanel>
+    </Grid>
+</Page>

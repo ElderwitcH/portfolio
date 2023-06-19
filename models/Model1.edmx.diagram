@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2c03e70997e44b4faefc7ec3cc20f2c7" Name="Diagram1">
+        <EntityTypeShape EntityType="TeaShopModel.bag" Width="1.5" PointX="7.5" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TeaShopModel.customer" Width="1.5" PointX="3" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TeaShopModel.delivery" Width="1.5" PointX="3" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TeaShopModel.employee" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TeaShopModel.order" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="TeaShopModel.post" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TeaShopModel.provider" Width="1.5" PointX="3" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TeaShopModel.sysdiagram" Width="1.5" PointX="5.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TeaShopModel.tea" Width="1.5" PointX="5.25" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TeaShopModel.type" Width="1.5" PointX="3" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TeaShopModel.user" Width="1.5" PointX="7.75" PointY="4.75" IsExpanded="true" />
+        <AssociationConnector Association="TeaShopModel.FK_bag_order" ManuallyRouted="false" />
+        <AssociationConnector Association="TeaShopModel.FK_bag_tea" ManuallyRouted="false" />
+        <AssociationConnector Association="TeaShopModel.FK_order_customer" ManuallyRouted="false" />
+        <AssociationConnector Association="TeaShopModel.FK_order_delivery" ManuallyRouted="false" />
+        <AssociationConnector Association="TeaShopModel.FK_employee_post" ManuallyRouted="false" />
+        <AssociationConnector Association="TeaShopModel.FK_order_employee" ManuallyRouted="false" />
+        <AssociationConnector Association="TeaShopModel.FK_tea_provider" ManuallyRouted="false" />
+        <AssociationConnector Association="TeaShopModel.FK_tea_type" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

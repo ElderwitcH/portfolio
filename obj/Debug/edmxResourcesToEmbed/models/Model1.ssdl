@@ -1,0 +1,276 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище TeaShopModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="bag">
+    <Key>
+      <PropertyRef Name="bag_ID" />
+    </Key>
+    <Property Name="order_ID" Type="int" Nullable="false" />
+    <Property Name="tea_ID" Type="int" Nullable="false" />
+    <Property Name="count" Type="int" />
+    <Property Name="bag_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="customer">
+    <Key>
+      <PropertyRef Name="customer_ID" />
+    </Key>
+    <Property Name="customer_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="surname" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="secondname" Type="nvarchar" MaxLength="50" />
+    <Property Name="birth" Type="date" Nullable="false" />
+    <Property Name="email" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="phone" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="delivery">
+    <Key>
+      <PropertyRef Name="delivery_ID" />
+    </Key>
+    <Property Name="delivery_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="delivery_type" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="employee">
+    <Key>
+      <PropertyRef Name="employee_ID" />
+    </Key>
+    <Property Name="employee_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="surname" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="secondname" Type="nvarchar" MaxLength="50" />
+    <Property Name="email" Type="nvarchar" MaxLength="50" />
+    <Property Name="phone" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="post_ID" Type="int" Nullable="false" />
+    <Property Name="image" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="order">
+    <Key>
+      <PropertyRef Name="order_ID" />
+    </Key>
+    <Property Name="order_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="customer_ID" Type="int" Nullable="false" />
+    <Property Name="delivery_ID" Type="int" />
+    <Property Name="customer_address" Type="nvarchar" MaxLength="50" />
+    <Property Name="date_order" Type="date" />
+    <Property Name="price_order" Type="float" />
+    <Property Name="employee_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="post">
+    <Key>
+      <PropertyRef Name="post_ID" />
+    </Key>
+    <Property Name="post_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="salary" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="provider">
+    <Key>
+      <PropertyRef Name="provider_ID" />
+    </Key>
+    <Property Name="provider_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="email" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="phone" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="country" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="tea">
+    <Key>
+      <PropertyRef Name="tea_ID" />
+    </Key>
+    <Property Name="tea_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="type_ID" Type="int" Nullable="false" />
+    <Property Name="price" Type="float" Nullable="false" />
+    <Property Name="image" Type="nvarchar" MaxLength="50" />
+    <Property Name="description" Type="nvarchar" MaxLength="500" />
+    <Property Name="provider_ID" Type="int" Nullable="false" />
+    <Property Name="count" Type="int" />
+  </EntityType>
+  <EntityType Name="type">
+    <Key>
+      <PropertyRef Name="type_ID" />
+    </Key>
+    <Property Name="type_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="category" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "TeaShop.dbo.user" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+  <EntityType Name="user">
+    <Key>
+      <PropertyRef Name="login" />
+      <PropertyRef Name="password" />
+    </Key>
+    <Property Name="login" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="password" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_bag_order">
+    <End Role="order" Type="Self.order" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="bag" Type="Self.bag" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="order">
+        <PropertyRef Name="order_ID" />
+      </Principal>
+      <Dependent Role="bag">
+        <PropertyRef Name="order_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_bag_tea">
+    <End Role="tea" Type="Self.tea" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="bag" Type="Self.bag" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tea">
+        <PropertyRef Name="tea_ID" />
+      </Principal>
+      <Dependent Role="bag">
+        <PropertyRef Name="tea_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_employee_post">
+    <End Role="post" Type="Self.post" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="employee" Type="Self.employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="post">
+        <PropertyRef Name="post_ID" />
+      </Principal>
+      <Dependent Role="employee">
+        <PropertyRef Name="post_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_order_customer">
+    <End Role="customer" Type="Self.customer" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="order" Type="Self.order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="customer">
+        <PropertyRef Name="customer_ID" />
+      </Principal>
+      <Dependent Role="order">
+        <PropertyRef Name="customer_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_order_delivery">
+    <End Role="delivery" Type="Self.delivery" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="order" Type="Self.order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="delivery">
+        <PropertyRef Name="delivery_ID" />
+      </Principal>
+      <Dependent Role="order">
+        <PropertyRef Name="delivery_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_order_employee">
+    <End Role="employee" Type="Self.employee" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="order" Type="Self.order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="employee">
+        <PropertyRef Name="employee_ID" />
+      </Principal>
+      <Dependent Role="order">
+        <PropertyRef Name="employee_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tea_provider">
+    <End Role="provider" Type="Self.provider" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="tea" Type="Self.tea" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="provider">
+        <PropertyRef Name="provider_ID" />
+      </Principal>
+      <Dependent Role="tea">
+        <PropertyRef Name="provider_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tea_type">
+    <End Role="type" Type="Self.type" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="tea" Type="Self.tea" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="type">
+        <PropertyRef Name="type_ID" />
+      </Principal>
+      <Dependent Role="tea">
+        <PropertyRef Name="type_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище TeaShopModelContainer">
+    <EntitySet Name="bag" EntityType="Self.bag" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="customer" EntityType="Self.customer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="delivery" EntityType="Self.delivery" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="employee" EntityType="Self.employee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="order" EntityType="Self.order" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="post" EntityType="Self.post" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="provider" EntityType="Self.provider" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tea" EntityType="Self.tea" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="type" EntityType="Self.type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="user" EntityType="Self.user" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [user].[login] AS [login], 
+    [user].[password] AS [password]
+    FROM [dbo].[user] AS [user]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_bag_order" Association="Self.FK_bag_order">
+      <End Role="order" EntitySet="order" />
+      <End Role="bag" EntitySet="bag" />
+    </AssociationSet>
+    <AssociationSet Name="FK_bag_tea" Association="Self.FK_bag_tea">
+      <End Role="tea" EntitySet="tea" />
+      <End Role="bag" EntitySet="bag" />
+    </AssociationSet>
+    <AssociationSet Name="FK_employee_post" Association="Self.FK_employee_post">
+      <End Role="post" EntitySet="post" />
+      <End Role="employee" EntitySet="employee" />
+    </AssociationSet>
+    <AssociationSet Name="FK_order_customer" Association="Self.FK_order_customer">
+      <End Role="customer" EntitySet="customer" />
+      <End Role="order" EntitySet="order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_order_delivery" Association="Self.FK_order_delivery">
+      <End Role="delivery" EntitySet="delivery" />
+      <End Role="order" EntitySet="order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_order_employee" Association="Self.FK_order_employee">
+      <End Role="employee" EntitySet="employee" />
+      <End Role="order" EntitySet="order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tea_provider" Association="Self.FK_tea_provider">
+      <End Role="provider" EntitySet="provider" />
+      <End Role="tea" EntitySet="tea" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tea_type" Association="Self.FK_tea_type">
+      <End Role="type" EntitySet="type" />
+      <End Role="tea" EntitySet="tea" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

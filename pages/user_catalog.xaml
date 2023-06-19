@@ -1,0 +1,69 @@
+﻿<Page x:Class="TeaShop.pages.user_catalog"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TeaShop.pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Каталог товаров">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="1" Source="C:/Users/земля/Desktop/shrg/курсачи/teaa/TeaShop/bin/Debug/Images/111.jpg" Stretch="UniformToFill"/>
+
+        <WrapPanel Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5,0,0,0">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Введите текст для поиска  " FontSize="20" VerticalAlignment="Center"/>
+                <TextBox x:Name="TBoxSerach" Width="260" Margin="5,0" HorizontalAlignment="Center" TextChanged="TBoxSerach_TextChanged" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <TextBlock Text="Категория:  " FontSize="20"/>
+                <ComboBox x:Name="Cmbnapravlenie" Width="250" SelectionChanged="Cmbnapravlenie_SelectionChanged"  DisplayMemberPath="category"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <TextBlock Text="Сортировать по:  " Margin="5,0" FontSize="20"/>
+                <ComboBox x:Name="CmbSort" Width="250" SelectionChanged ="CmbSort_SelectionChanged">
+                    <ComboBoxItem Content="Возрастанию" />
+                    <ComboBoxItem Content="Убыванию" />
+                </ComboBox>
+            </StackPanel>
+        </WrapPanel>
+
+        <ListView x:Name="ListoxViewStay" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Stretch" Grid.Row="1" Opacity="0.85">
+
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Width="300">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*" />
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Image Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Source="{Binding GetPhoto}" Height="270"/>
+                        <TextBlock Grid.Row="1" TextWrapping="Wrap" TextAlignment="Center" FontSize="14" Text="{Binding name, StringFormat=' \{0\}'}" HorizontalAlignment="Center" />
+                        <TextBlock Grid.Row="4" TextWrapping="Wrap" TextAlignment="Center" FontSize="14" Text="{Binding price, StringFormat=Стоимость: \{0\} ₽}" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Row="2" TextWrapping="Wrap" TextAlignment="Center" FontSize="14" Text="{Binding provider.name, StringFormat=\{0\}}" HorizontalAlignment="Center" />
+                        <TextBlock Grid.Row="3" TextWrapping="Wrap" TextAlignment="Center"  FontSize="14" Text="{Binding type.category, StringFormat=' \{0\}'}" HorizontalAlignment="Center" />
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button Grid.Row="2" Content="Поддержка" Click="Button_Click"  HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="14" Background="#FFD1B877" FontWeight="UltraBold" Foreground="#FF5D8E4D" Width="100" Height="30" Margin="0,5,38,5"/>
+        <Button Grid.Row="2" Content="Админ" Click="Button_Click_1"   HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14"  Background="#FFD1B877" FontWeight="UltraBold" Foreground="#FF5D8E4D" Width="130" Height="30" Margin="38,5,0,5"/>
+        <Button Grid.Row="2" Content="Сотрудники" Click="Button_Click_2"   HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14"  Background="#FFD1B877" FontWeight="UltraBold" Foreground="#FF5D8E4D" Width="130" Height="30" Margin="200,5,0,5"/>
+    </Grid>
+</Page>

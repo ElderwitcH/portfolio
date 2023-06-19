@@ -1,0 +1,19 @@
+2022/10/27-14:33:39.553 3874 Reusing MANIFEST C:\Users\земля\Desktop\shrg\курсачи\teaa\TeaShop\bin\Debug\TeaShop.exe.WebView2\EBWebView\Default\Local Storage\leveldb/MANIFEST-000001
+2022/10/27-14:33:39.554 3874 Recovering log #5
+2022/10/27-14:33:39.582 3874 Level-0 table #7: started
+2022/10/27-14:33:39.590 3874 Level-0 table #7: 359170 bytes OK
+2022/10/27-14:33:39.590 3874 Recovering log #6
+2022/10/27-14:33:39.664 3874 Level-0 table #8: started
+2022/10/27-14:33:39.675 3874 Level-0 table #8: 360471 bytes OK
+2022/10/27-14:33:39.680 3874 Delete type=0 #5
+2022/10/27-14:33:39.680 3874 Delete type=0 #6
+2022/10/27-14:33:39.691 3874 Compacting 4@0 + 0@1 files
+2022/10/27-14:33:39.721 3874 Generated table #10@0: 19 keys, 362888 bytes
+2022/10/27-14:33:39.722 3874 Compacted 4@0 + 0@1 files => 362888 bytes
+2022/10/27-14:33:39.754 3874 compacted to: files[ 0 1 0 0 0 0 0 ]
+2022/10/27-14:33:39.756 3874 Delete type=2 #3
+2022/10/27-14:33:39.756 3874 Delete type=2 #4
+2022/10/27-14:33:39.756 3874 Delete type=2 #7
+2022/10/27-14:33:39.756 3874 Delete type=2 #8
+2022/10/27-14:35:23.343 2108 Level-0 table #12: started
+2022/10/27-14:35:23.357 2108 Level-0 table #12: 358556 bytes OK
