@@ -1,0 +1,37 @@
+﻿<Window x:Class="ModFirm.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ModFirm"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+     TextElement.FontWeight="Regular"
+     TextElement.FontSize="13"
+     TextOptions.TextFormattingMode="Ideal"
+     TextOptions.TextRenderingMode="Auto"
+     Background="{DynamicResource MaterialDesignPaper}"
+     FontFamily="{DynamicResource MaterialDesignFont}"
+        mc:Ignorable="d"
+        Title="Trophy" Height="450" Width="800"  WindowState="Maximized">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <Grid Background="#c58596"/>
+        <Grid Grid.Row="2" Background="#c58596"/>
+        <Button Content="TROPHY" Foreground="White" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Bauhaus 93" Height="70" Width="1000" Background="Transparent" Padding="0" BorderBrush="{x:Null}" Click="Button_Click"/>
+        <Frame Grid.Row="1" x:Name="MainFrame" NavigationUIVisibility="Hidden" Background="Beige"/>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="10 0 10 0" HorizontalAlignment="Center">
+            <Button Content="Назад" x:Name="back" Click="back_Click"  Margin="10 0 10 0"/>
+            <Button Content="Корзина" x:Name="bag" Click="bag_Click"  Margin="10 0 10 0"/>
+            <Button Content="Избранное" x:Name="fav" Click="fav_Click"  Margin="10 0 10 0"/>
+            <Button Content="Заказы" x:Name="order" Click="order_Click"  Margin="10 0 10 0"/>
+            <Button Content="Сотрудники" x:Name="employee" Click="employee_Click"  Margin="10 0 10 0"/>
+            <Button Content="Помощь" x:Name="help" Click="help_Click"  Margin="10 0 10 0"/>
+            <Button Content="Выход" x:Name="exit" Click="exit_Click"  Margin="10 0 10 0"/>
+        </StackPanel>
+    </Grid>
+</Window>

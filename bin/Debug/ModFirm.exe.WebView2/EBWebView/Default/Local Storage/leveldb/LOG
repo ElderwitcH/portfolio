@@ -1,0 +1,17 @@
+2023/05/25-00:12:37.460 313c Reusing MANIFEST C:\Users\земля\Desktop\хочю черешню\diplom\ModFirm\bin\Debug\ModFirm.exe.WebView2\EBWebView\Default\Local Storage\leveldb/MANIFEST-000001
+2023/05/25-00:12:37.461 313c Recovering log #22
+2023/05/25-00:12:37.483 313c Level-0 table #25: started
+2023/05/25-00:12:37.509 313c Level-0 table #25: 506230 bytes OK
+2023/05/25-00:12:37.518 313c Delete type=0 #22
+2023/05/25-00:12:37.521 2200 Compacting 4@0 + 1@1 files
+2023/05/25-00:12:37.594 2200 Generated table #27@0: 5 keys, 505913 bytes
+2023/05/25-00:12:37.594 2200 Compacted 4@0 + 1@1 files => 505913 bytes
+2023/05/25-00:12:37.595 2200 compacted to: files[ 0 1 1 0 0 0 0 ]
+2023/05/25-00:18:43.653 2200 Level-0 table #29: started
+2023/05/25-00:18:43.666 2200 Level-0 table #29: 504152 bytes OK
+2023/05/25-00:18:43.670 2200 Delete type=2 #16
+2023/05/25-00:18:43.670 2200 Delete type=2 #18
+2023/05/25-00:18:43.670 2200 Delete type=2 #21
+2023/05/25-00:18:43.670 2200 Delete type=2 #23
+2023/05/25-00:18:43.670 2200 Delete type=2 #25
+2023/05/25-00:18:43.670 2200 Delete type=0 #26

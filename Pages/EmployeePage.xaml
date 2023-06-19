@@ -1,0 +1,67 @@
+﻿<Page x:Class="ModFirm.Pages.EmployeePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ModFirm.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="EmployeePage" IsVisibleChanged="Page_IsVisibleChanged">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <DataGrid Grid.Row="0" ScrollViewer.CanContentScroll="False" AutoGenerateColumns="False" IsReadOnly="True" Margin="300,0" x:Name="EmployeeGrid" ScrollViewer.HorizontalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding EmployeeID}" Header="Код сотрудника" Width="*" Visibility="Hidden"/>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Source="{Binding GetPhoto}" Height="200"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Binding="{Binding Post.Name}" Header="Должность" Width="100" />
+                <DataGridTextColumn Binding="{Binding Birth}" Header="Дата рождения" Width="100"/>
+                <DataGridTextColumn Binding="{Binding Mail}" Header="Почта" Width="100"/>
+                <DataGridTextColumn Binding="{Binding Number}" Header="Номер" Width="100"/>
+                <DataGridTemplateColumn Header="Сотрудник" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock>
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0} {1} {2}">
+                                        <Binding Path="Surname" />
+                                        <Binding Path="Name" />
+                                        <Binding Path="Second_Name" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Binding="{Binding Pass_Ser}" Header="Серия паспорта" Width="100"/>
+                <DataGridTextColumn Binding="{Binding Pass_Num}" Header="Номер паспорта" Width="100"/>
+                <DataGridTemplateColumn Header="Редактировать">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="°°°" x:Name="edib" Click="edib_Click"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Удалить" x:Name="delib" Click="delib_Click"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button Content="Добавить сотрудника" Name="newemp" Click="newemp_Click" />
+        </StackPanel>
+    </Grid>
+</Page>

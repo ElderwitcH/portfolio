@@ -1,0 +1,20 @@
+﻿ModFirm
+
+
+winexe
+C#
+.cs
+C:\Users\земля\Desktop\хочю черешню\diplom\ModFirm\obj\Debug\
+ModFirm
+none
+false
+DEBUG;TRACE
+C:\Users\земля\Desktop\хочю черешню\diplom\ModFirm\App.xaml
+141661160425
+51240150714
+37-1057924600
+24-732365450
+Pages\BagPage.xaml;Pages\EditEmployeePage.xaml;Pages\EditPage.xaml;Pages\EmployeePage.xaml;Pages\FavPage.xaml;Pages\HelpPage.xaml;Pages\OrderPage.xaml;Pages\ProductCard.xaml;Pages\UserPage.xaml;Windows\LoginWindow.xaml;Windows\MainWindow.xaml;Windows\OrderListWindow.xaml;Windows\PayWindow.xaml;Windows\RegistrationWindow.xaml;
+
+False
+

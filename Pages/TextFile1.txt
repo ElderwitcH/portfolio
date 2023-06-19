@@ -1,0 +1,593 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BusinessEvent.Modules
+{
+    internal class AuthStorage
+    {
+        static public int RoleID { get; set; }
+        static public string Surname { get; set; }
+        static public string Name { get; set; }
+        static public string Patronymic { get; set; }
+        static public string image_user { get; set; }
+        static public bool IsCorrect { get; set; }
+        public static bool IsAuth { get; set; }
+
+        static public int ID { get; set; }
+        static public int UserID { get; set; }
+        public static user User { get; set; }
+
+    }
+}
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Drawing;
+
+namespace BusinessEvent.Modules
+{
+    static class Captcha
+    {
+        static public string CreateCaptcha(string fileName = "captcha.png")
+        {
+            Random rnd = new Random();
+
+            int height = 100;
+            int width = 200;
+            string abc = "qwertyuiopasdfghjklzxcvbnm1234567890";
+            string captcha = "";
+            for (int i = 0; i < 5; i++)
+            {
+                captcha = captcha + abc[rnd.Next(0, abc.Length)];
+            }
+
+            Bitmap image = new Bitmap(width, height);
+
+            Graphics graphics = Graphics.FromImage(image);
+
+            for (int i = 0; i < 100; i += 10)
+            {
+                graphics.DrawLine(Pens.Red, new Point(i, i),
+                  new Point(width - i, height - i));
+            }
+            graphics.DrawString(captcha, new Font("Arial", 15, FontStyle.Italic), Brushes.Black, new PointF(width / 2 - 42, height / 2 - 13));
+
+            image.Save(Directory.GetCurrentDirectory() + "\\Images\\" + captcha + ".png", System.Drawing.Imaging.ImageFormat.Png);
+
+            return captcha;
+        }
+    }
+}
+
+        private static conferenceEntities _ctx;
+        public static conferenceEntities GetContext() => _ctx ?? (_ctx = new conferenceEntities());
+        public string GetPhoto
+        {
+            get
+            {
+                if (image_user is null || image_user == "")
+                    return Directory.GetCurrentDirectory() + @"\Images\" + "Default.jpg";
+                return Directory.GetCurrentDirectory() + @"\Images\" + image_user.Trim();
+            }
+        }
+   Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" ContentRendered="MainFrame_ContentRendered" Grid.Row="1"/>
+        <Button x:Name="AuthBtn" Content="Войти" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="16 0" Height="30" Width="70" Click="AuthBtn_Click"/>
+        <Button x:Name="BackBtn" Content="Назад" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="16 0" Grid.Row="2" Width="70" Height="30" Click="BackBtn_Click"/>
+    </Grid>
+public MainWindow()
+        {
+            InitializeComponent();
+
+            if (AuthStorage.RoleID == 3)
+            {
+                MessageBox.Show("Вы вошли в роли организатора");
+                MainFrame.Navigate(new Pages.OrganizatorPage());
+            }
+            else if (AuthStorage.RoleID == 1)
+            {
+                MessageBox.Show("Вы вошли в роли жюри");
+            }
+            else if (AuthStorage.RoleID == 2)
+            {
+                MessageBox.Show("Вы вошли в роли участника");
+            }
+            else if (AuthStorage.RoleID == 0)
+            {
+                MainFrame.Navigate(new Pages.EventPage());
+            }
+            if (AuthStorage.IsAuth == true)
+            {
+                AuthBtn.Visibility = Visibility.Hidden;
+            }
+        }
+
+        private void MainFrame_ContentRendered(object sender, EventArgs e)
+        {
+            if (MainFrame.CanGoBack)
+            {
+                BackBtn.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                BackBtn.Visibility = Visibility.Hidden;
+            }
+        }
+
+        private void AuthBtn_Click(object sender, RoutedEventArgs e)
+        {
+            LoginWindow login = new LoginWindow();
+            login.Show();
+            this.Close();
+        }
+
+        private void BackBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (MainFrame.CanGoBack)
+            {
+                MainFrame.GoBack();
+            }
+        }
+    }
+}
+
+   Title="LoginWindow" Height="250" WindowStartupLocation="CenterScreen" Width="500">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="Номер" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+        <TextBlock Text="Пароль" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+        <Button x:Name="LoginBtn" Content="Войти" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2" Click="LoginBtn_Click" Grid.Row="4" Width="80" Height="40" FontSize="20"/>
+        <TextBox x:Name="NumTb" VerticalAlignment="Center" HorizontalAlignment="Center" Width="150" Grid.Row="1" Grid.Column="1" />
+        <TextBox x:Name="PassTb" VerticalAlignment="Center" HorizontalAlignment="Center" Width="150" Grid.Row="2" Grid.Column="1" />
+        <Button x:Name="Btn" Content="q" Width="50" Height="20" Click="Btn_Click"/>
+    </Grid>
+  public LoginWindow()
+        {
+            InitializeComponent();
+            DataContext = this;
+        }
+
+        private void LoginBtn_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+               user User = conferenceEntities.GetContext().users.FirstOrDefault(p => p.id_user.ToString() == NumTb.Text && p.password == PassTb.Text);
+               if (User != null)
+               {
+                    AuthStorage.RoleID = User.id_role;
+                    AuthStorage.ID = User.id_user;
+                    AuthStorage.User = User;
+                    AuthStorage.IsAuth = true;
+                    AuthStorage.User = User;
+                    new CaptchaWindow().Show();
+                    this.Close();
+               }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void Btn_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                user User = conferenceEntities.GetContext().users.FirstOrDefault(p => p.id_user.ToString() == NumTb.Text && p.password == PassTb.Text);
+                if (User != null)
+                {
+                    AuthStorage.RoleID = User.id_role;
+                    AuthStorage.ID = User.id_user;
+                    AuthStorage.User = User;
+                    AuthStorage.IsAuth = true;
+                    AuthStorage.User = User;
+                    new CaptchaWindow().Show();
+                    this.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+    }
+}
+
+Title="CaptchaWindow" Height="250" Width="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="TBlockTime" HorizontalAlignment="Center"/>
+        <Image x:Name="CaptchaImage" Source="{Binding CaptchaPath}" Width="200" Height="90"/>
+        <TextBox x:Name="TbCaptcha" Grid.Row="2" Width="150" Height="20" HorizontalAlignment="Center"/>
+        <Button x:Name="BtnCheck" Content="check" Width="50" Height="20" Grid.Row="3" Click="BtnCheck_Click"/>
+    </Grid>
+using BusinessEvent.Modules;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using System.Windows.Threading;
+
+namespace BusinessEvent
+{
+    /// <summary>
+    /// Логика взаимодействия для CaptchaWindow.xaml
+    /// </summary>
+    public partial class CaptchaWindow : Window
+    {
+        DispatcherTimer timer = new DispatcherTimer();
+        int seconds = 0;
+        string _correctCaptcha { get; set; }
+        short jopa;
+        public CaptchaWindow()
+        {
+            InitializeComponent();
+            _correctCaptcha = Captcha.CreateCaptcha();
+
+            CaptchaImage.Source = new BitmapImage(new Uri($@"{Directory.GetCurrentDirectory()}\Images\{_correctCaptcha}.png"));
+            timer.Tick += timer_Tick;
+            jopa = 0;
+        }
+
+        private void BtnCheck_Click(object sender, RoutedEventArgs e)
+        {
+            jopa++;
+            if (jopa < 3)
+            {
+                if (_correctCaptcha != TbCaptcha.Text)
+                {
+                    MessageBox.Show("Каптча введена не верно");
+                }
+            }
+            else
+            {
+                timer.Interval = TimeSpan.FromSeconds(1);
+                //блокируем кнопку 
+                BtnCheck.IsEnabled = false;
+                //на 10 секунд
+                seconds = 10;
+                //отображает сколько секунд осталось до разлокировки
+                TBlockTime.Text = $"Осталось {seconds} секунд до разлокировки";
+                //включаем таймер
+                timer.Start();
+            }
+            if (_correctCaptcha == TbCaptcha.Text)
+            {
+                MessageBox.Show("Каптча введена верно");
+                new MainWindow().Show();
+                this.Close();
+            }
+        }
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            seconds -= 1;
+            TBlockTime.Text = $"Осталось {seconds} секунд до разблокировки";
+            //останавливаем таймер, разлбокировываем кнопку
+            if (seconds == 0)
+            {
+                BtnCheck.IsEnabled = true;
+                TBlockTime.Text = "";
+                timer.Stop();
+            }
+        }
+    }
+}
+
+Title="OrganizatorPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="270"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="200"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Vertical" Grid.ColumnSpan="3" HorizontalAlignment="Center">
+            <TextBlock Text="Окно организатора" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" FontWeight="Bold"/>
+            <TextBlock x:Name="TBGreetings" Grid.Column="1" Grid.Row="0" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock x:Name="TBUsername" FontSize="20" TextWrapping="Wrap"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" Grid.Row="1" Grid.RowSpan="2" Grid.Column="1">
+            <Button x:Name="EventBtn" Grid.Row="1" Grid.Column="1" Content="Мероприятия" Width="300" FontSize="20" Margin="8 8" Height="70" Click="EventBtn_Click"/>
+            <Button x:Name="MemberBtn" Grid.Row="2" Grid.Column="1" Content="Участники" Width="300" FontSize="20" Height="70" Margin="8 8" Click="MemberBtn_Click"/>
+            <Button x:Name="JuryBtn" Grid.Row="3" Grid.Column="1" Content="Жюри" Width="300" Height="70" FontSize="20" Margin="8 8" Click="JuryBtn_Click"/>
+        </StackPanel>
+        <ListBox x:Name="ImageLB" Grid.RowSpan="3" Grid.Row="1" Width="260" Height="200" Margin="0 -200 0 0 " ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Image Source="{Binding GetPhoto}" Stretch="Fill" Width="250" Height="250"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>        
+        <StackPanel Orientation="Vertical" Grid.Row="3">
+            <Button x:Name="ProfileBtn" Grid.Row="3" Height="70" Margin="32 8" Content="Мой профиль" FontSize="20" Click="ProfileBtn_Click"/>
+        </StackPanel>
+    </Grid>
+</Page>
+
+public partial class OrganizatorPage : Page
+    {
+        user userr;
+        public OrganizatorPage()
+        {
+            InitializeComponent();
+            ImageLB.ItemsSource = conferenceEntities.GetContext().users.Where(p => p.id_user == AuthStorage.ID).ToList();
+            DateTime now = DateTime.Now;
+            string greeting = "";
+
+            if (now.Hour >= 9 && now.Hour < 11)
+            {
+                greeting = "Доброе утро!";
+            }
+            else if (now.Hour >= 11 && now.Hour < 18)
+            {
+                greeting = "Добрый день!";
+            }
+            else
+            {
+                greeting = "Добрый вечер!";
+            }
+            DataContext = this;
+            TBGreetings.Text = greeting;
+            userr = AuthStorage.User;
+            if (userr != null)
+            {
+                TBUsername.Text = $"{userr.surname} { userr.name} { userr.patronymic}";
+            }
+        }
+
+        private void EventBtn_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new EventPage());
+        }
+
+        private void MemberBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void JuryBtn_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Pages.JuryAddPage());
+        }
+
+        private void ProfileBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+    }
+}
+
+  Title="JuryAddPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Grid.ColumnSpan="3" Text="Регистрация жюри/модератора" FontSize="30"/>
+        <TextBlock Text="ФИО" Grid.Row="1" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <TextBlock Text="Пол" Grid.Row="2" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <TextBlock Text="Роль" Grid.Row="3" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <TextBlock Text="Email" Grid.Row="4" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <TextBlock Text="Телефон" Grid.Row="5" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <TextBlock Text="Направление" Grid.Row="6" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <TextBox x:Name="FullNameTb" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="200"/>
+        <ComboBox x:Name="GenderCb" SelectedItem="{Binding gender}" DisplayMemberPath="name_g" HorizontalAlignment="Left" VerticalAlignment="Center" Width="200" Grid.Row="2" Grid.Column="1"/>
+        <ComboBox SelectedIndex="0" x:Name="RoleCb" SelectedItem="{Binding role}" DisplayMemberPath="name_r" HorizontalAlignment="Left" VerticalAlignment="Center" Width="200" Grid.Row="3" Grid.Column="1"/>
+        <TextBox x:Name="EmailTb" HorizontalAlignment="Left" VerticalAlignment="Center" Width="200" Grid.Row="4" Grid.Column="1"/>
+        <xctk:MaskedTextBox x:Name="PhoneMtb" Grid.Row="5" Grid.Column="1" Mask="+7(999) - 099-90-90" BorderBrush="Black" HorizontalAlignment="Left" Height="20" VerticalAlignment="Center" Width="200"/>
+        <ComboBox x:Name="DirectionCb" VerticalAlignment="Center" HorizontalAlignment="Left" SelectedItem="{Binding direction}" DisplayMemberPath="direction1" Width="200" Grid.Row="6" Grid.Column="1"/>
+        <Button x:Name="LoadPhoto" Content="Загрузить фото" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="4" Grid.Column="2" Width="150" Height="30" Click="LoadPhoto_Click"/>
+        <DatePicker x:Name="BirthTb" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="7" Width="200" Grid.Column="1"/>
+        <TextBlock Text="Дата рождения" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="7" FontSize="20"/>
+        <TextBlock Text="Страна" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="8" FontSize="20"/>
+        <ComboBox x:Name="CountryCb" VerticalAlignment="Center" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Left" Width="200" SelectedItem="{Binding country}" DisplayMemberPath="name_county"/>
+        <StackPanel Grid.Row="5" Grid.Column="2" Orientation="Horizontal">
+            <TextBlock Text="Пароль " VerticalAlignment="Center" FontSize="20" HorizontalAlignment="Center"/>
+            <TextBox x:Name="PassTb" VerticalAlignment="Center" HorizontalAlignment="Center" Width="200"/>
+        </StackPanel>
+        <StackPanel Grid.Row="6" Grid.Column="2" Orientation="Horizontal">
+            <TextBlock Text="Пароль " VerticalAlignment="Center" FontSize="20" HorizontalAlignment="Center"/>
+            <TextBox x:Name="PassConfirmTb" VerticalAlignment="Center" HorizontalAlignment="Center" Width="200"/>
+        </StackPanel>
+        <StackPanel Grid.Row="9" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button x:Name="OkBtn" Content="OK" HorizontalAlignment="Center" VerticalAlignment="Center" Width="80" Click="OkBtn_Click"/>
+            <Button x:Name="CancelBtn" Content="Отмена" HorizontalAlignment="Center" VerticalAlignment="Center" Width="80" Click="CancelBtn_Click" Margin="32 0"/>
+        </StackPanel> 
+    </Grid>
+        public user User { get; set; }
+        public string _photoDirectory = $@"{Directory.GetCurrentDirectory()}\Images\";
+        private string _photoPath;
+        private string _photoName;
+        public JuryAddPage()
+        {
+            InitializeComponent();
+            User = new user();
+            DataContext = User;
+            RoleCb.ItemsSource = conferenceEntities.GetContext().roles.Where(p => p.id_role == 1 || p.id_role == 2).ToList();
+            GenderCb.ItemsSource = conferenceEntities.GetContext().genders.ToList();
+            DirectionCb.ItemsSource = conferenceEntities.GetContext().directions.ToList();
+            CountryCb.ItemsSource = conferenceEntities.GetContext().countries.ToList();
+            RoleCb.SelectedIndex = 0;
+        }
+
+        private void LoadPhoto_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFile = new OpenFileDialog();
+            openFile.Filter = "JPG Files (*.jpg)|*.jpg|PNG Files (*.png) |*.png";
+            if (openFile.ShowDialog() == false)
+            {
+                return;
+            }
+            FileInfo fileInfo= new FileInfo(openFile.FileName);
+
+            if (fileInfo.Length > 8 * 1024 * 1024 * 6)
+            {
+                MessageBox.Show("Размер файла превышает 6Мб");
+                return;
+            }
+            _photoName = Guid.NewGuid().ToString();
+            _photoPath = fileInfo.FullName;
+        }
+
+        private void OkBtn_Click(object sender, RoutedEventArgs e)
+        {
+            DataContext = User;
+            User.email = EmailTb.Text;
+            if (PassTb.Text == PassConfirmTb.Text)
+            {
+                User.password = PassConfirmTb.Text;
+            }    
+            else
+            {
+                MessageBox.Show("Пароли не совпадают");
+            }
+            //User.id_role = 1;
+            AuthStorage.UserID = User.id_user;
+            DataContext = User;
+            string[] parts = FullNameTb.Text.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            string Surname = parts[0];
+            string Name = parts[1];
+            string Patronymic = parts[2];
+            User.surname = Surname;
+            User.name = Name;
+            User.patronymic= Patronymic;
+            User.id_role = (RoleCb.SelectedItem as role).id_role;
+            User.id_gender = (GenderCb.SelectedItem as gender).id_gender;
+            User.birth_date = BirthTb.SelectedDate.Value;
+            User.id_country = (CountryCb.SelectedItem as country).id_country;
+            User.phone = PhoneMtb.Text;
+            User.id_direction = (DirectionCb.SelectedItem as direction).id_direction;
+            if (_photoPath != null)
+            {
+                User.image_user = _photoName;
+                File.Copy(_photoPath, _photoDirectory + _photoName);
+            }
+            User.id_user = AuthStorage.UserID;
+            conferenceEntities.GetContext().users.Add(User);
+            conferenceEntities.GetContext().SaveChanges();
+            MessageBox.Show("Вы зарегистрировались");
+            NavigationService.GoBack();
+        }
+
+        private void CancelBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+    }
+}
+
+Title="EventPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0">
+            <TextBlock Text="Фильтрация: " Margin="8 0"/>
+            <ComboBox x:Name="FiltCb" DisplayMemberPath="date" SelectionChanged="FiltCb_SelectionChanged" Width="150"/>
+        </StackPanel>
+        
+        <DataGrid x:Name="EventDate" HorizontalAlignment="Center" ItemsSource="{Binding theevent}" Grid.Row="1" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Наименование" Binding="{Binding name_e}" CanUserSort="True"/>
+                <DataGridTextColumn Header="Дата проведения" Binding="{Binding date,StringFormat=dd.MM.yyyy}"/>
+                <DataGridTextColumn Header="Количество дней" Binding="{Binding days}"/>
+                <DataGridTemplateColumn Header="Изображение">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding GetPhoto}" Width="100"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+        public List<theevent> Event { get; set; }
+        public EventPage()
+        {
+            InitializeComponent();
+            EventDate.ItemsSource = null;
+            Event = conferenceEntities.GetContext().theevents.ToList();
+            EventDate.ItemsSource = Event;
+            List<theevent> events = conferenceEntities.GetContext().theevents.ToList();
+            FiltCb.ItemsSource = events;
+        }
+
+        private void FiltCb_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Update();
+        }
+        private void Update()
+        {
+            List<theevent> events = conferenceEntities.GetContext().theevents.ToList();
+            if (FiltCb.SelectedIndex >= 0)
+            {
+                events = events.Where(p => p.date == (FiltCb.SelectedItem as theevent).date).ToList();
+            }
+            EventDate.ItemsSource = events;
+        }
+    }
+}
+
+мм

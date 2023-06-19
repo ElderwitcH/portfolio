@@ -1,0 +1,57 @@
+﻿<Page x:Class="ModFirm.Pages.EditEmployeePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ModFirm.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="EditEmployeePage">
+    <Grid Background="White">
+        <Grid HorizontalAlignment="Center" Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBlock x:Name="TextBlockId" Grid.Row="0" Grid.Column="0" Margin="50 0 0 0 " Text="ID:" FontSize="20" Height="40" FontFamily="arial" Visibility="Hidden"/>
+        <TextBlock Text="Изображение" Height="40" FontSize="20" Margin="50 0 0 0" Grid.Row="1" FontFamily="arial" />
+        <TextBlock Text="Должность" Height="40" FontSize="20" Margin="50 0 0 0" Grid.Row="2" FontFamily="arial" />
+        <TextBlock Text="Имя" Height="40" FontSize="20" Margin="50 0 0 0" Grid.Column="0" Grid.Row="3" FontFamily="arial" />
+        <TextBlock Text="Фамилия" Height="40" FontSize="20" Margin="50 0 0 0" Grid.Row="4" FontFamily="arial" />
+        <TextBlock Text="Почта" Height="40" FontSize="20" Margin="50 0 0 0" Grid.Row="7" FontFamily="arial" />
+        <TextBlock Text="Телефон" Height="40" FontSize="20" Margin="50 0 0 0" Grid.Row="6" FontFamily="arial" />
+        <TextBlock Text="Отчество" Height="40" FontSize="20" Margin="50 0 0 0" Grid.Row="5" FontFamily="arial" />
+        <TextBlock Text="Дата рождения" Height="40" FontSize="20" Margin="50 0 0 0" Grid.Row="8" FontFamily="arial" />
+        <TextBlock Text="Серия паспорта" Height="40" FontSize="20" Margin="50 0 0 0" Grid.Row="9" FontFamily="arial" />
+        <TextBlock Text="Номер паспорта" Height="40" FontSize="20" Margin="50 0 0 0" Grid.Row="10" FontFamily="arial" />
+
+        <TextBox x:Name="TextBoxId" Grid.Column="1" Height="40" Width="350" Margin="50 0 0 0" HorizontalAlignment="Left" Text="{Binding Post_ID}" Visibility="Hidden"/>
+        <TextBox x:Name="TxtType" Width="350" Height="40" Margin="50 0 0 0" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="3" Text="{Binding Name}"/>
+        <TextBox x:Name="TxtDesc" Width="350" Height="40" Margin="50 0 0 0" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="4" Text="{Binding Surname}"/>
+        <TextBox x:Name="TxtEmail" Width="350" Height="40" Margin="50 0 0 0" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="7" Text="{Binding Mail}"/>
+        <TextBox x:Name="TxtPhone" Width="350" Height="40" Margin="50 0 0 0" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="6" Text="{Binding Number}"/>
+        <TextBox x:Name="TxtSur" Width="350" Height="40" Margin="50 0 0 0" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="9" Text="{Binding Pass_Ser}"/>
+        <TextBox x:Name="TxtSer" Width="350" Height="40" Margin="50 0 0 0" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="10" Text="{Binding Pass_Num}"/>
+        <TextBox x:Name="TxtNum" Width="350" Height="40" Margin="50 0 0 0" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="8" Text="{Binding Birth}"/>
+        <TextBox x:Name="TxtBirth" Width="350" Height="40" Margin="50 0 0 0" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="5" Text="{Binding Second_Name}"/>
+        <ComboBox Name="CmbPost" Width="350" Height="40" Grid.Column="1" Grid.Row="2"  HorizontalAlignment="Left" Margin="50 0 0 0" SelectionChanged="CmbPost_SelectionChanged"/>
+        <Image x:Name="ImagePhoto" Source="{Binding Path=GetPhoto}" Grid.Row="1" Grid.Column="1" Width="60" Height="60" Margin="70 0" HorizontalAlignment="Left"/>
+        <Button x:Name="LoadImage" Grid.Column="1" Grid.Row="1" Content="Загрузить" VerticalAlignment="Center" HorizontalAlignment="Center" Click="LoadImage_Click"/>
+        <Button x:Name="BtnSave" Content="Сохранить" Grid.Row="12" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Click="BtnSave_Click" />
+    </Grid>
+    </Grid>
+</Page>

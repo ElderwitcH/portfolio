@@ -1,0 +1,68 @@
+﻿<Window x:Class="ModFirm.Windows.RegistrationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ModFirm.Windows"
+        mc:Ignorable="d"
+        Title="Registration" Height="450" Width="800" TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+     TextElement.FontWeight="Regular"
+     TextElement.FontSize="13"
+     TextOptions.TextFormattingMode="Ideal"
+     TextOptions.TextRenderingMode="Auto"
+     Background="{DynamicResource MaterialDesignPaper}"
+     FontFamily="{DynamicResource MaterialDesignFont}" WindowState="Maximized">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+    <Grid HorizontalAlignment="Center" Grid.Row="1">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="Изображение" Height="40" FontSize="20" Margin="50 0 0 0" Grid.Row="1" FontFamily="arial" />
+        <TextBlock Text="Дата рождения" Height="40" FontSize="20" Margin="50 0 0 0" Grid.Column="0" Grid.Row="3" FontFamily="arial" />
+        <TextBlock Text="Почта" Height="40" FontSize="20" Margin="50 0 0 0" Grid.Row="4" FontFamily="arial" />
+        <TextBlock Text="Телефон" Height="40" FontSize="20" Margin="50 0 0 0" Grid.Row="5" FontFamily="arial" />
+        <TextBlock Text="Фамилия" Height="40" FontSize="20" Margin="50 0 0 0" Grid.Row="6" FontFamily="arial" />
+        <TextBlock Text="Имя" Height="40" FontSize="20" Margin="50 0 0 0" Grid.Row="7" FontFamily="arial" />
+        <TextBlock Text="Отчество" Height="40" FontSize="20" Margin="50 0 0 0" Grid.Row="8" FontFamily="arial" />
+        <TextBlock Text="Логин" Height="40" FontSize="20" Margin="50 0 0 0" Grid.Row="9" FontFamily="arial" />
+        <TextBlock Text="Пароль" Height="40" FontSize="20" Margin="50 0 0 0" Grid.Row="10" FontFamily="arial" />
+      
+        <TextBox x:Name="TxtDesc" Width="350" Height="40" Margin="50 0 0 0" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="3" Text="{Binding Birth}"/>
+        <TextBox x:Name="txtt" Width="350" Height="40" Margin="50 0 0 0" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="4" Text="{Binding Mail}"/>
+        <TextBox x:Name="telephoneTXT" Width="350" Height="40" Margin="50 0 0 0" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="5" Text="{Binding Number}"/>
+        <TextBox x:Name="txttt" Width="350" Height="40" Margin="50 0 0 0" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="6" Text="{Binding Surname}"/>
+        <TextBox x:Name="txtttt" Width="350" Height="40" Margin="50 0 0 0" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="7" Text="{Binding Name}"/>
+        <TextBox x:Name="txttttt" Width="350" Height="40" Margin="50 0 0 0" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="8" Text="{Binding Second_Name}"/>
+        <TextBox x:Name="logTXT" Width="350" Height="40" Margin="50 0 0 0" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="9" />
+        <TextBox x:Name="passTXT" Width="350" Height="40" Margin="50 0 0 0" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="10" />
+        <Image x:Name="ImagePhoto" Source="{Binding Path=GetPhoto}" Grid.Row="1" Grid.Column="1" Width="60" Height="60" Margin="70 0" HorizontalAlignment="Left"/>
+        <Button x:Name="LoadImage" Grid.Column="1" Grid.Row="1" Content="Загрузить" VerticalAlignment="Center" HorizontalAlignment="Center" Click="LoadImage_Click"/>
+        </Grid>
+        <Grid Background="#c58596"/>
+        <TextBlock Foreground="White" Text="TROPHY REGISTRATION" FontFamily="Bauhaus 93" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" />
+        <Grid Background="#c58596" Grid.Row="3" />
+        <Button x:Name="BtnSave" Content="Зарегистрироваться" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Click="BtnSave_Click" />
+    </Grid>
+</Window>
